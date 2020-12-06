@@ -1,8 +1,20 @@
-const d1 = require("./days/1");
-const d2 = require("./days/2");
-const d3 = require("./days/3");
-const d4 = require("./days/4");
-const d5 = require("./days/5");
-const d6 = require("./days/6");
+const prompts = require("prompts");
 
-console.log(d6.answer2());
+(async () => {
+  const response = await prompts([
+    {
+      type: "number",
+      name: "day",
+      message: "Which day would you like to run?",
+      // validate: value => value < TOTAL
+    },
+    {
+      type: "number",
+      name: "answer",
+      message: "Answer 1 or 2?",
+      validate: (value) => value === 1 || value === 2,
+    },
+  ]);
+  const day = require(`./days/${response.day}`);
+  console.log(response.answer === 1 ? day.answer1() : day.answer2());
+})();

@@ -16,5 +16,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "prompts": "^2.4.0"
+  }
 }
