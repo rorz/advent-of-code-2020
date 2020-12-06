@@ -19,32 +19,22 @@ const answer1 = () =>
 
 const answer2 = () =>
   numbers
-    .map((figure, fIndex) => [
-      figure,
-      numbers.find(
-        (comparison, cIndex) =>
-          fIndex !== cIndex && figure + comparison === 2020
-      ),
-    ])
-    .filter(([, comparison]) => !!comparison)
-    .slice(0, 1)
+    .map((f1, f1Index) =>
+      numbers
+        .map((f2, f2Index) =>
+          numbers.map((f3, f3Index) => {
+            return f1Index !== f2Index &&
+              f2Index !== f3Index &&
+              f3Index !== f1Index
+              ? [f1, f2, f3]
+              : null;
+          })
+        )
+        .flat()
+    )
     .flat()
-    .reduce((total, number) => total * number, 1);
-
-// {
-//   let numberTriplet = [0, 0, 0];
-//   input.forEach((figure1, f1Index) => {
-//     input.forEach((figure2, f2Index) => {
-//       input.forEach((figure3, f3Index) => {
-//         if (f1Index !== f2Index && f1Index !== f3Index && f2Index !== f3Index) {
-//           if (figure1 + figure2 + figure3 === 2020) {
-//             numberTriplet = [figure1, figure2, figure3];
-//           }
-//         }
-//       });
-//     });
-//   });
-//   return numberTriplet[0] * numberTriplet[1] * numberTriplet[2];
-// };
+    .filter((value) => !!value)
+    .find(([f1, f2, f3]) => f1 + f2 + f3 === 2020)
+    .reduce((total, figure) => total * figure, 1);
 
 module.exports = { answer1, answer2 };
