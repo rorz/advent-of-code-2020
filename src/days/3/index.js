@@ -8,7 +8,7 @@ const answer1 = () =>
     .map((row, _, arr) => [...Array(arr.length)].map(() => row).join(""))
     .reduce(
       (total, currentRow, rowIndex) =>
-        total + +(currentRow[rowIndex * 1] === "#"),
+        total + +(currentRow[rowIndex * 3] === "#"),
       0
     );
 
