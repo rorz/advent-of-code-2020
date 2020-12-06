@@ -1,11 +1,8 @@
-const fs = require("fs");
-
-const input = fs.readFileSync(`${__dirname}/input.txt`, "utf-8");
-const groups = input.split("\n\n");
+const processInput = (input) => input.split("\n\n");
 
 const sumGroups = (g) => g.reduce((total, count) => total + count, 0);
 
-const answer1 = () =>
+const answer1 = (groups) =>
   sumGroups(
     groups.map((group) =>
       group
@@ -25,7 +22,7 @@ const answer1 = () =>
     )
   );
 
-const answer2 = () =>
+const answer2 = (groups) =>
   sumGroups(
     groups.map((group) =>
       group
@@ -48,4 +45,4 @@ const answer2 = () =>
     )
   );
 
-module.exports = { answer1, answer2 };
+module.exports = { answer1, answer2, processInput };

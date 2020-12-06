@@ -1,9 +1,6 @@
-const fs = require("fs");
+const processInput = (text) => text.split("\n");
 
-const text = fs.readFileSync(`${__dirname}/input.txt`, "utf-8");
-const treeInput = text.split("\n");
-
-const answer1 = () =>
+const answer1 = (treeInput) =>
   treeInput
     .map((row, _, arr) => [...Array(arr.length)].map(() => row).join(""))
     .reduce(
@@ -12,7 +9,7 @@ const answer1 = () =>
       0
     );
 
-const answer2 = () =>
+const answer2 = (treeInput) =>
   [1, 3, 5, 7, 0.5]
     .map((deltaCol) =>
       treeInput
@@ -29,4 +26,4 @@ const answer2 = () =>
     )
     .reduce((total, currentCollisions) => total * currentCollisions, 1);
 
-module.exports = { answer1, answer2 };
+module.exports = { answer1, answer2, processInput };

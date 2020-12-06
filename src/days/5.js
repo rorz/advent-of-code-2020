@@ -1,7 +1,5 @@
-const fs = require("fs");
-
-const input = fs.readFileSync(`${__dirname}/input.txt`, "utf-8");
-const seatCodes = input.split("\n").map((seatNumber) => seatNumber.trim());
+const processInput = (input) =>
+  input.split("\n").map((seatNumber) => seatNumber.trim());
 
 const ROW_LEN = 7;
 const COL_LEN = 3;
@@ -17,12 +15,12 @@ const expandSeatCode = (seatCode) => [
 
 const getSeatId = (row, col) => row * 8 + col;
 
-const answer1 = () =>
+const answer1 = (seatCodes) =>
   seatCodes
     .map((seatCode) => getSeatId(...expandSeatCode(seatCode)))
     .sort((a, b) => b - a)[0];
 
-const answer2 = () =>
+const answer2 = (seatCodes) =>
   [
     seatCodes
       .map((seatCode) => expandSeatCode(seatCode))
@@ -37,4 +35,4 @@ const answer2 = () =>
       ),
   ].map(([rowIndex, colIndex]) => getSeatId(rowIndex, colIndex + 1))[0];
 
-module.exports = { answer1, answer2 };
+module.exports = { answer1, answer2, processInput };

@@ -1,9 +1,7 @@
-const fs = require("fs");
+const processInput = (input) =>
+  input.split("\n").map((number) => Number(number));
 
-const text = fs.readFileSync(`${__dirname}/input.txt`, "utf-8");
-const numbers = text.split("\n").map((number) => Number(number));
-
-const answer1 = () =>
+const answer1 = (numbers) =>
   numbers
     .map((figure, fIndex) => [
       figure,
@@ -17,7 +15,7 @@ const answer1 = () =>
     .flat()
     .reduce((total, number) => total * number, 1);
 
-const answer2 = () =>
+const answer2 = (numbers) =>
   numbers
     .map((f1, f1Index) =>
       numbers
@@ -35,4 +33,4 @@ const answer2 = () =>
     .find(([f1, f2, f3]) => f1 + f2 + f3 === 2020)
     .reduce((total, figure) => total * figure, 1);
 
-module.exports = { answer1, answer2 };
+module.exports = { answer1, answer2, processInput };

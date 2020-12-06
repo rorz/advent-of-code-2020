@@ -1,7 +1,4 @@
-const fs = require("fs");
-
-const text = fs.readFileSync(`${__dirname}/input.txt`, "utf-8");
-const passwords = text.split("\n");
+const processInput = (text) => text.split("\n");
 
 const breakoutLine = (line) => ({
   targetCharacter: line.split(":")[0].split(" ")[1],
@@ -11,7 +8,7 @@ const breakoutLine = (line) => ({
 
 const lineFilter = (line, processor) => processor(breakoutLine(line));
 
-const answer1 = () =>
+const answer1 = (passwords) =>
   passwords.filter((line) =>
     lineFilter(
       line,
@@ -23,7 +20,7 @@ const answer1 = () =>
     )
   ).length;
 
-const answer2 = () =>
+const answer2 = (passwords) =>
   passwords.filter((line) =>
     lineFilter(
       line,
@@ -36,4 +33,4 @@ const answer2 = () =>
     )
   ).length;
 
-module.exports = { answer1, answer2 };
+module.exports = { answer1, answer2, processInput };

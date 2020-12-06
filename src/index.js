@@ -1,4 +1,5 @@
 const prompts = require("prompts");
+const fs = require("fs");
 
 (async () => {
   const response = await prompts([
@@ -16,5 +17,15 @@ const prompts = require("prompts");
     },
   ]);
   const day = require(`./days/${response.day}`);
-  console.log(response.answer === 1 ? day.answer1() : day.answer2());
+  const input = fs.readFileSync(
+    `${__dirname}/inputs/${response.answer}.txt`,
+    "utf-8"
+  );
+  const processedInput = day.processInput(input);
+  console.log(processedInput);
+  console.log(
+    response.answer === 1
+      ? day.answer1(processedInput)
+      : day.answer2(processedInput)
+  );
 })();
