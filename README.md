@@ -7,7 +7,7 @@ This is an attempt to complete all challenges for 2020's Advent of Code using pu
  The main problem with this approach is that code will generally be less readable than if I was allowed to use multi-line features such as variable declaration, object/array destructuring, if/switch statements, etc. However, I decided to gift myself an early christmas present of being hard on myself for no good reason.
  
  The benefits of this approach are:
- * While being less _readable_ in one sense, with proper Prettier formatting, chained functions demonstrate their inherent readability
+ * While being less _readable_ in one sense, with proper Prettier formatting, chained functions demonstrate their inherent readability and brevity
  * Most of the AoC20 challenges are line-by-line array parsing — meaning I get to leverage, and learn more about, JS's array methods
  * I have to be more inventive by prohibiting the use of array method function-blocks...
  
