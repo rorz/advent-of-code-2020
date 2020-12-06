@@ -5,4 +5,4 @@ const d4 = require("./days/4");
 const d5 = require("./days/5");
 const d6 = require("./days/6");
 
-console.log(d1.answer2());
+console.log(d6.answer2());

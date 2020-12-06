@@ -22,13 +22,11 @@ const answer2 = () =>
     .map((f1, f1Index) =>
       numbers
         .map((f2, f2Index) =>
-          numbers.map((f3, f3Index) => {
-            return f1Index !== f2Index &&
-              f2Index !== f3Index &&
-              f3Index !== f1Index
+          numbers.map((f3, f3Index) =>
+            f1Index !== f2Index && f2Index !== f3Index && f3Index !== f1Index
               ? [f1, f2, f3]
-              : null;
-          })
+              : null
+          )
         )
         .flat()
     )

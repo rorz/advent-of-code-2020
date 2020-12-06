@@ -35,13 +35,13 @@ const answer2 = () =>
           (total, answer, index, arr) =>
             index === 0
               ? total +
-                answer.filter((char) => {
-                  return arr
+                answer.filter((char) =>
+                  arr
                     .slice(1, arr.length)
                     .every((comparisonAnswer) =>
                       comparisonAnswer.includes(char)
-                    );
-                }).length
+                    )
+                ).length
               : total,
           0
         )
