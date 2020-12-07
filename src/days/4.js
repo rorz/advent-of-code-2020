@@ -1,7 +1,4 @@
-const fs = require("fs");
-
-const input = fs.readFileSync(`${__dirname}/input.txt`, "utf-8");
-const passports = input.split("\n\n");
+const processInput = (input) => input.split("\n\n");
 
 const requiredFields = [
   "byr",
@@ -14,7 +11,7 @@ const requiredFields = [
   // "cid"
 ];
 
-const answer1 = () =>
+const answer1 = (passports) =>
   passports.reduce(
     (count, passport) =>
       count +
@@ -43,7 +40,7 @@ const fieldIsValid = ([field, value]) =>
     pid: () => /^\d{9}$/.test(value),
   }[field]();
 
-const answer2 = () =>
+const answer2 = (passports) =>
   passports.reduce(
     (count, passport) =>
       count +
@@ -61,7 +58,4 @@ const answer2 = () =>
     0
   );
 
-module.exports = {
-  answer1,
-  answer2,
-};
+module.exports = { answer1, answer2, processInput };
