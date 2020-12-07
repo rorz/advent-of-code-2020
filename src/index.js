@@ -24,28 +24,21 @@ const days = [...Array(fs.readdirSync(`${__dirname}/days`).length + 1)].map(
       },
     ])
   )
-    .sort(([a], [b]) => (a > b ? 1 : -1))
+    .sort(([a], [b]) => (a < b ? 1 : -1))
     .map(([, value]) => value)
-    .forEach(
-      (_, index, response) =>
-        index === response.length - 1 &&
-        console.log(
-          response.answer === 1
-            ? days[response[0]].answer1(
-                days[response[0]].processInput(
-                  fs.readFileSync(
-                    `${__dirname}/inputs/${response[0]}.txt`,
-                    "utf-8"
-                  )
+    .reduce(
+      (funcs, currentValue, index, arr) =>
+        index === 0
+          ? [
+              days[currentValue][`answer${arr[1]}`],
+              days[currentValue].processInput,
+            ]
+          : console.log(
+              funcs[0](
+                funcs[1](
+                  fs.readFileSync(`${__dirname}/inputs/${arr[0]}.txt`, "utf-8")
                 )
               )
-            : days[response[0]].answer2(
-                days[response[0]].processInput(
-                  fs.readFileSync(
-                    `${__dirname}/inputs/${response[0]}.txt`,
-                    "utf-8"
-                  )
-                )
-              )
-        )
+            ),
+      []
     ))();
