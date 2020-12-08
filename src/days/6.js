@@ -6,28 +6,25 @@ const processGroups = (reducer) => (groups) =>
       group
         .split("\n")
         .map((answer) => [...answer])
-        .reduce(reducer, 0)
+        .map(reducer)
+        .reduce((total, count) => total + count)
     )
-    .reduce((total, count) => total + count, 0);
+    .reduce((total, count) => total + count);
 
-const answer1 = processGroups(
-  (total, answer, index, arr) =>
-    total +
-    (index === 0
-      ? answer.length
-      : answer.filter((char) => !arr.slice(0, index).flat().includes(char))
-          .length)
+const answer1 = processGroups((answer, index, arr) =>
+  index === 0
+    ? answer.length
+    : answer.filter((char) => !arr.slice(0, index).flat().includes(char)).length
 );
 
 const answer2 = processGroups(
-  (total, answer, index, arr) =>
-    total +
+  (answer, index, arr) =>
     +(
       index === 0 &&
       answer.filter((char) =>
         arr
           .slice(1, arr.length)
-          .every((comparisonAnswer) => comparisonAnswer.includes(char))
+          .every((comparison) => comparison.includes(char))
       ).length
     )
 );
