@@ -1,6 +1,5 @@
 const processInput = (input) => input.split("\n").map((num) => +num);
 const PREAMBLE_LENGTH = 25;
-const TARGET_SUM = 542529149;
 
 const sumExists = (target, options) =>
   options.some((option) =>
@@ -19,22 +18,14 @@ const answer1 = (source) =>
 const contiguousSumExists = (source, startIndex, endIndex) =>
   source
     .slice(startIndex, endIndex)
-    .reduce((total, current) => total + current, 0) === TARGET_SUM;
+    .reduce((total, current) => total + current, 0) === 542529149;
 
-const findContiguousSum = (source, startIndex, endIndex = source.length) => {
-  if (endIndex === startIndex + 1) {
-    return false;
-  }
-  if (contiguousSumExists(source, startIndex, endIndex)) {
-    const range = source.slice(startIndex, endIndex);
-    console.log(source[startIndex], source[endIndex - 1]);
-    return Math.min(...range) + Math.max(...range);
-  }
-  // console.log(startIndex, endIndex);
-  // const nextStart = startIndex + +(endIndex === startIndex + 1);
-  // const nextEnd = endIndex === startIndex + 1 ? source.length : endIndex - 1;
-  return findContiguousSum(source, startIndex, endIndex - 1);
-};
+const findContiguousSum = (source, startIndex, endIndex = source.length) =>
+  endIndex > startIndex &&
+  (contiguousSumExists(source, startIndex, endIndex)
+    ? Math.min(...source.slice(startIndex, endIndex)) +
+      Math.max(...source.slice(startIndex, endIndex))
+    : findContiguousSum(source, startIndex, endIndex - 1));
 
 const answer2 = (source) =>
   source.map((_, index) => findContiguousSum(source, index)).find((val) => val);
