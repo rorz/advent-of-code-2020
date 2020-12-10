@@ -14,47 +14,47 @@ const answer1 = (instructions) => {
   return accumulator;
 };
 
+const splitIndex = (set, index) =>
+  index !== set.length && set[index].split(" ");
+const transposeCondition = (split, match, negative) =>
+  +(split && split[0] === match ? +split[1] : negative);
+
+const replaceInstruction = (targetIndex) => (instruction, index) =>
+  index === targetIndex
+    ? instruction.replace(
+        instruction.substr(0, 3),
+        instruction.substr(0, 3) === "jmp" ? "nop" : "jmp"
+      )
+    : instruction;
+const createVariants = (source) => (targetIndex) =>
+  source.slice().map(replaceInstruction(targetIndex));
+
+const getOperator = (instruction) => instruction.substr(0, 3);
+const isJumpOrNoop = (instruction) =>
+  getOperator(instruction) === "jmp" || getOperator(instruction) === "nop";
+
 const answer2 = (instructions) =>
   instructions
-    .map((instruction) => instruction.substr(0, 3))
-    .map((instruction, index) =>
-      instruction === "jmp" || instruction === "nop" ? index : null
-    )
+    .map((instruction, index) => isJumpOrNoop(instruction) && index)
     .filter((val) => !!val)
-    .map((targetIndex) =>
-      instructions
-        .slice()
-        .map((instruction, index) =>
-          index === targetIndex
-            ? instruction.replace(
-                instruction.substr(0, 3),
-                instruction.substr(0, 3) === "jmp" ? "nop" : "jmp"
-              )
-            : instruction
-        )
-    )
+    .map(createVariants(instructions))
     .map((variant) =>
       variant.reduce(
-        ([nextInstructionIndex, accumulator], _, index, self) =>
-          nextInstructionIndex === self.length
-            ? [nextInstructionIndex, accumulator]
-            : nextInstructionIndex > self.length ||
-              accumulator === null ||
-              index === self.length - 1
-            ? [null, null]
-            : [
-                nextInstructionIndex +
-                  (self[nextInstructionIndex].split(" ")[0] === "jmp"
-                    ? +self[nextInstructionIndex].split(" ")[1]
-                    : 1),
-                accumulator +
-                  (self[nextInstructionIndex].split(" ")[0] === "acc"
-                    ? +self[nextInstructionIndex].split(" ")[1]
-                    : 0),
-              ],
+        ([nextIndex, accumulator], _, index, self) => [
+          nextIndex +
+            +(
+              nextIndex !== self.length &&
+              transposeCondition(splitIndex(self, nextIndex), "jmp", 1)
+            ),
+          accumulator +
+            +(
+              nextIndex !== self.length &&
+              transposeCondition(splitIndex(self, nextIndex), "acc", 0)
+            ),
+        ],
         [0, 0]
       )
     )
-    .filter(([, value]) => !!value)[0][1];
+    .find(([finalIndex]) => finalIndex === instructions.length)[1];
 
 module.exports = { answer1, answer2, processInput };
