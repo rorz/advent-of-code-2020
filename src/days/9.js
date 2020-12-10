@@ -1,12 +1,15 @@
-const processInput = (input) => input.split("\n").map((num) => +num);
 const PREAMBLE_LENGTH = 25;
 
+const processInput = (input) => input.split("\n").map((num) => +num);
+
+/* 1 */
 const sumExists = (target, options) =>
   options.some((option) =>
     options.find(
       (comparison) => option !== comparison && option + comparison === target
     )
   );
+
 const findNonSum = (source, targets, index = 0) =>
   sumExists(targets[index], source.slice(index, index + PREAMBLE_LENGTH))
     ? findNonSum(source, targets, index + 1)
@@ -15,17 +18,16 @@ const findNonSum = (source, targets, index = 0) =>
 const answer1 = (source) =>
   findNonSum(source, source.slice(PREAMBLE_LENGTH, source.length));
 
-const contiguousSumExists = (source, startIndex, endIndex) =>
-  source
-    .slice(startIndex, endIndex)
-    .reduce((total, current) => total + current, 0) === 542529149;
+/* 2 */
+const sumSides = (set) => Math.min(...set) + Math.max(...set);
 
 const findContiguousSum = (source, startIndex, endIndex = source.length) =>
   endIndex > startIndex &&
-  (contiguousSumExists(source, startIndex, endIndex)
-    ? Math.min(...source.slice(startIndex, endIndex)) +
-      Math.max(...source.slice(startIndex, endIndex))
-    : findContiguousSum(source, startIndex, endIndex - 1));
+  ((source
+    .slice(startIndex, endIndex)
+    .reduce((total, current) => total + current, 0) === 542529149 &&
+    sumSides(source.slice(startIndex, endIndex))) ||
+    findContiguousSum(source, startIndex, endIndex - 1));
 
 const answer2 = (source) =>
   source.map((_, index) => findContiguousSum(source, index)).find((val) => val);
